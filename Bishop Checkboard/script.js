@@ -1,5 +1,7 @@
 const boardContainer = document.getElementsByClassName("board")[0];
-const size = 8;
+
+// A chessboard normally is 8X8 size. But taking scalability into account we have introduced size parameter.
+const size = 8; // You can make user input this.
 generateBoard();
 
 //Function for generating the board
@@ -27,6 +29,7 @@ boardContainer.addEventListener("mouseover", (e) => {
     let currRow = Math.floor(currentIndex/size);
     let currCol = Math.floor(currentIndex%size);
 
+    //Every time we hover over a block we remove pre-existing highlighted colors.
     for(let i=1;i<=size;i++) {
         for(let j=1;j<=size;j++) {
             let searchID = `board${i}${j}`;
@@ -34,19 +37,27 @@ boardContainer.addEventListener("mouseover", (e) => {
             searchBlock.classList.remove("blue");
         }
     }
+    
+    /*
+        In this step we will move to the diagonal elements to highlight the colors.
+    */
 
+    //Down-Right diagonal movement.
     for (let x = currRow, y = currCol; x < size && y < size; x++, y++) {
         addHoverColor(x+1, y+1)
     }
 
+    //Up-Left diagonal movement.
     for (let x = currRow, y = currCol; x >= 0 && y >= 0; x--, y--) {
         addHoverColor(x+1, y+1)
     }
 
+    //Up-Right diagonal movement.
     for (let x = currRow, y = currCol; x < size && y >= 0; x++, y--) {
         addHoverColor(x+1, y+1)
     }
 
+    //Down-Left diagonal movement.
     for (let x = currRow, y = currCol; x >= 0 && y < size; x--, y++) {
         addHoverColor(x+1, y+1)
     }
