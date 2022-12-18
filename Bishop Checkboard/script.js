@@ -1,0 +1,73 @@
+const boardContainer = document.getElementsByClassName("board")[0];
+const size = 8;
+generateBoard();
+
+//Function for generating the board
+function generateBoard() {
+    boardContainer.style.gridTemplateColumns = `repeat(${size},80px)`;
+    for(let i=1;i<=size;i++) {
+        for(let j=1;j<=size;j++) {
+            const newBlock = document.createElement("div");
+            newBlock.id = `board${String(i)+String(j)}`;
+            newBlock.classList.add("block");
+            if(i%2 == j%2) {
+                newBlock.classList.add("black");
+            }
+            else {
+                newBlock.classList.add("white");
+            }
+            boardContainer.appendChild(newBlock);
+        }
+    }
+}
+
+//Attaching the mouseover event
+boardContainer.addEventListener("mouseover", (e) => {
+    let currentIndex = Array.from(boardContainer.children).indexOf(e.target);
+    let currRow = Math.floor(currentIndex/size);
+    let currCol = Math.floor(currentIndex%size);
+
+    for(let i=1;i<=size;i++) {
+        for(let j=1;j<=size;j++) {
+            let searchID = `board${i}${j}`;
+            let searchBlock = document.getElementById(searchID);
+            searchBlock.classList.remove("blue");
+        }
+    }
+
+    for (let x = currRow, y = currCol; x < size && y < size; x++, y++) {
+        addHoverColor(x+1, y+1)
+    }
+
+    for (let x = currRow, y = currCol; x >= 0 && y >= 0; x--, y--) {
+        addHoverColor(x+1, y+1)
+    }
+
+    for (let x = currRow, y = currCol; x < size && y >= 0; x++, y--) {
+        addHoverColor(x+1, y+1)
+    }
+
+    for (let x = currRow, y = currCol; x >= 0 && y < size; x--, y++) {
+        addHoverColor(x+1, y+1)
+    }
+});
+
+//Function to add the highlight color to the block element
+function addHoverColor(i,j) {
+    let searchID = `board${i}${j}`;
+    let searchBlock = document.getElementById(searchID);
+    if(searchBlock) {
+        searchBlock.classList.add("blue");
+    }
+}
+
+//Remove the leftover highligh colors
+boardContainer.addEventListener("mouseleave", () => {
+    for(let i=1;i<=8;i++) {
+        for(let j=1;j<=8;j++) {
+            let searchID = `board${i}${j}`;
+            let searchBlock = document.getElementById(searchID);
+            searchBlock.classList.remove("blue");
+        }
+    }
+})
