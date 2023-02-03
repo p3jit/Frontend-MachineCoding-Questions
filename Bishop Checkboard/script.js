@@ -10,8 +10,13 @@ function generateBoard() {
     for(let i=1;i<=size;i++) {
         for(let j=1;j<=size;j++) {
             const newBlock = document.createElement("div");
-            newBlock.id = `board${String(i)+String(j)}`;
+            newBlock.id = `board${String(i)+String(j)}`; // adding id to block in "board[row][col] format"
             newBlock.classList.add("block");
+            /*
+                Lets take an example for the first row and second row.
+                when first row last col index is 8 and the second row first col is index 0
+                then (i%2 == j%2) becomes true and we print alternating fashion grid color
+            */
             if(i%2 == j%2) {
                 newBlock.classList.add("black");
             }
