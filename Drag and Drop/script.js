@@ -49,6 +49,10 @@ function dragDrop(e) {
 
 function swapElements(el1, el2) {
   var p2 = el2.parentNode, n2 = el2.nextSibling
+  if (n2 === el1) {
+    p2.insertBefore(el1, el2);
+    return;
+  }
   el1.parentNode.insertBefore(el2, el1);
   p2.insertBefore(el1, n2);
 }
